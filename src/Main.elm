@@ -1,11 +1,9 @@
 module Main exposing (..)
+
 import Browser
-import Card exposing (..)
-import Html exposing (Html, button, div, text, input)
-import Html.Events exposing (onClick)
-import Html.Attributes exposing (placeholder)
-import Html.Events exposing (onInput)
-import Html.Attributes exposing (value)
+import Html exposing (..)
+import Html.Events exposing (..)
+import Html.Attributes exposing (..)
 
 -- MAIN
 main =
@@ -37,15 +35,33 @@ update msg model =
     Change newMessage -> 
       { model | message = newMessage }
 
+containerStyle : List (Attribute msg) -> List (Attribute msg)
+containerStyle list =
+    [ style "border-radius" "5px"
+    , style "background-color" "#f2f2f2"
+    , style "padding" "20px"
+    ] ++ list
+
+header : Model -> Html Msg
+header model = 
+  div[]
+    [ text ("een header" ++ model.message) ]
+
+
 -- VIEW
 view : Model -> Html Msg
 view model =
-  div []
+  div (containerStyle[])
     [ button [ onClick Decrement ] [ text "-" ]
     , div [] [ text (String.fromInt model.count) ]
     , button [ onClick Increment ] [ text "+" ]
     , div [] [ text "Hello world!" ]
     , div [] [ text ("Shop here! " ++ model.message) ]
     , input [ placeholder "shop name", value model.message, onInput Change] []
+    , header model
+    , img [ 
+      src "http://images6.fanpop.com/image/photos/41000000/38976356-cool-hd-wallpapers-bambidkar-41031277-2880-1800.jpg" 
+      , width 500
+      , height 500] []
     ]
 
