@@ -5,6 +5,7 @@ shop frontend
 
 ### Frontend
 - [ ] Frontend
+- [ ] Hover
 
 ### Backend
 - [ ] Get products

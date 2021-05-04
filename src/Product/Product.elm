@@ -38,7 +38,10 @@ product model =
     , div (Styles.right [])
       [ span [] [ text ("Price: " ++ fromInt (calculatePrice model)) ] 
       , label [] [ text "Quantity" ]
-      , input [ type_ "number", value (String.fromInt model.quantity), onInput (ForProduct << Quantity) ] [ ]
+      , input [ type_ "number"
+              , value (String.fromInt model.quantity)
+              , onInput (ForProduct << Quantity)
+              , Html.Attributes.min "1"] [ ]
       , button [] [ text "Purchase" ]
       ]
     ]

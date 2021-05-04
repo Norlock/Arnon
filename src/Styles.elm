@@ -2,16 +2,16 @@ module Styles exposing (..)
 import Html exposing (..)
 import Html.Attributes exposing (..)
 
-type alias AttrList msg = List (Attribute msg)
+type alias AttrList msg = List (Attribute msg) -> List (Attribute msg)
 
-container : AttrList msg -> AttrList msg
+container : AttrList msg 
 container list =
       [ style "border-radius" "5px"
       , style "background-color" "#f2f2f2"
       , style "padding" "20px"
       ] ++ list
     
-navbar : AttrList msg -> AttrList msg
+navbar : AttrList msg 
 navbar list =
     [ style "background-color" "#a2c2f2"
     , style "margin" "20px"
@@ -21,7 +21,7 @@ navbar list =
     , style "align-items" "center"
     ] ++ list
 
-navbarList : AttrList msg -> AttrList msg
+navbarList : AttrList msg 
 navbarList list =
     [ style "background-color" "#a2c2f2"
     , style "list-style-type" "none"
@@ -29,7 +29,7 @@ navbarList list =
     , style "flex-direction" "row"
     ] ++ list
 
-navbarItem : AttrList msg -> AttrList msg
+navbarItem : AttrList msg 
 navbarItem list =
     [ style "background-color" "#22a2a2"
     , style "padding" "20px"
@@ -38,7 +38,7 @@ navbarItem list =
     , style "cursor" "pointer"
     ] ++ list
 
-loginContainer : AttrList msg -> AttrList msg
+loginContainer : AttrList msg 
 loginContainer list =
     [ style "background-color" "#22a2a2"
     , style "padding" "20px"
