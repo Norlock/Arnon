@@ -14,8 +14,17 @@ container list =
 navbar : AttrList msg -> AttrList msg
 navbar list =
     [ style "background-color" "#a2c2f2"
-    , style "list-style-type" "none"
     , style "margin" "20px"
+    , style "display" "flex"
+    , style "flex-direction" "row"
+    , style "justify-content" "space-between"
+    , style "align-items" "center"
+    ] ++ list
+
+navbarList : AttrList msg -> AttrList msg
+navbarList list =
+    [ style "background-color" "#a2c2f2"
+    , style "list-style-type" "none"
     , style "display" "flex"
     , style "flex-direction" "row"
     ] ++ list
@@ -25,6 +34,16 @@ navbarItem list =
     [ style "background-color" "#22a2a2"
     , style "padding" "20px"
     , style "display" "grid"
+    , style "align-items" "center"
+    , style "cursor" "pointer"
+    ] ++ list
+
+loginContainer : AttrList msg -> AttrList msg
+loginContainer list =
+    [ style "background-color" "#22a2a2"
+    , style "padding" "20px"
+    , style "margin-right" "20px"
+    , style "display" "flex"
     , style "align-items" "center"
     , style "cursor" "pointer"
     ] ++ list
