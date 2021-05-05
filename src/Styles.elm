@@ -2,14 +2,14 @@ module Styles exposing (..)
 import Html exposing (..)
 import Html.Attributes exposing (..)
 
-type alias AttrList msg = List (Attribute msg) -> List (Attribute msg)
+type alias AttrList  msg = List (Attribute msg) -> List (Attribute msg)
 
 container : AttrList msg 
-container list =
-      [ style "border-radius" "5px"
-      , style "background-color" "#f2f2f2"
-      , style "padding" "20px"
-      ] ++ list
+container list = 
+    [ style "border-radius" "5px"
+    , style "background-color" "#f2f2f2"
+    , style "padding" "20px"
+    ] ++ list
     
 navbar : AttrList msg 
 navbar list =
@@ -31,8 +31,7 @@ navbarList list =
 
 navbarItem : AttrList msg 
 navbarItem list =
-    [ style "background-color" "#22a2a2"
-    , style "padding" "20px"
+    [ style "padding" "20px"
     , style "display" "grid"
     , style "align-items" "center"
     , style "cursor" "pointer"

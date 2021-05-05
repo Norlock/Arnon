@@ -45,12 +45,13 @@ updateMain msg model =
 
 headerItem : String -> Html Msg
 headerItem tabTitle =
-    li (Styles.navbarItem [onMouseOver (ForMain Hover) ]) [ text tabTitle ]
+    li (Styles.navbarItem [onMouseOver (ForMain Hover), class "nav-item"]) [ text tabTitle ]
 
 header :  Html Msg
 header = 
   div [] 
       [ h1 [] [text "Fashion store"]
+      , node "link" [ rel "stylesheet", href "/css/index.css" ] []
       , div (Styles.navbar []) 
         [ ul (Styles.navbarList []) 
           [ headerItem "Home"
