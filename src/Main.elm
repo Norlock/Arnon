@@ -1,6 +1,8 @@
 module Main exposing (..)
 
 import Browser
+import Browser.Navigation as Nav
+
 import Styles
 import Models 
 import Html exposing (..)
@@ -9,22 +11,44 @@ import Html.Attributes exposing (..)
 import Debug exposing (log)
 import Product.Product as Product
 import Messages exposing (..)
+import Url
 
 -- MAIN
 main =
-  Browser.sandbox { init = init, update = update, view = view }
+  Browser.application { 
+    init = init, 
+    update = update, 
+    view = view,
+    subscriptions = subscriptions,
+    onUrlChange = ChangedUrl,
+    onUrlRequest = ClickedLink
+  }
 
-init : Models.Model
-init = 
+init : () -> Url.Url -> Nav.Key -> (Models.Model, Cmd msg )
+init flags url key = 
+  (rootModel, Cmd.none) 
+
+rootModel : Models.Model
+rootModel =
   { product = Product.init, main = initMain } 
 
-update : Msg -> Models.Model -> Models.Model
+update : Msg -> Models.Model -> (Models.Model, Cmd Msg)
 update msg model =
   case msg of
     ForMain forMain ->
-      { model | main = (updateMain forMain model.main) }
+      ({ model | main = (updateMain forMain model.main) }
+      , Cmd.none)
     ForProduct forProduct ->
-      { model | product = (Product.update forProduct model.product) }
+      ({ model | product = (Product.update forProduct model.product) }
+      , Cmd.none)
+    ChangedUrl url ->
+      (model, Cmd.none)
+    ClickedLink req ->
+      (model, Cmd.none)
+
+subscriptions : Models.Model -> Sub Msg
+subscriptions model =
+  Sub.none
 
 initMain : Models.Main
 initMain = 
@@ -39,39 +63,39 @@ updateMain msg model =
       { model | count = model.count - 1 }
     Change newMessage -> 
       { model | message = newMessage }
-    Hover -> 
-      log "test"
-      model
 
-headerItem : String -> Html Msg
-headerItem tabTitle =
-    li (Styles.navbarItem [onMouseOver (ForMain Hover), class "nav-item"]) [ text tabTitle ]
+navbar : List String -> Html Msg
+navbar tabTitles =
+    tabTitles 
+      |> List.map
+        (\title ->
+          li (Styles.navbarItem [class "nav-item"]) [ text title ]
+        )
+      |> ul (Styles.navbarList [])
 
 header :  Html Msg
 header = 
   div [] 
       [ h1 [] [text "Fashion store"]
-      , node "link" [ rel "stylesheet", href "/css/index.css" ] []
       , div (Styles.navbar []) 
-        [ ul (Styles.navbarList []) 
-          [ headerItem "Home"
-          , headerItem "Fashion" 
-          , headerItem "Discount"
-          , headerItem "Contact" 
-          ]
+        [ navbar ["Home", "Fashion", "Discount", "Contact"] 
         , span (Styles.loginContainer []) [ text "login" ]
         ]
       ]
 
 -- VIEW
-view : Models.Model -> Html Msg
+view : Models.Model -> Browser.Document Msg
 view model =
-  div (Styles.container [])
-    [ header 
-    , div [] [ text "Hello world!" ]
-    , div [] 
-      [ Product.product model.product ]
+  { title = "Home"
+  , body = [
+    div (Styles.container [])
+      [ header 
+      , div [] [ text "Hello world!" ]
+      , div [] [ Product.product model.product ]
+      , node "link" [ rel "stylesheet", href "/css/index.css" ] []
+      ]
     ]
+  }
 
     --, button [ onClick Decrement ] [ text "-" ]
     --, div [] [ text (String.fromInt model.count) ]

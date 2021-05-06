@@ -1,4 +1,12 @@
 body {
-    background-color: blue;
+    background-color: #aaa;
     padding: 20px;
+}
+
+.nav-item {
+    background-color: purple;
+
+    &:hover {
+        background-color: orange;
+    }
 }
