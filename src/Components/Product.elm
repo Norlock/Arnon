@@ -1,9 +1,9 @@
-module Product.Product exposing (..)
+module Components.Product exposing (..)
 
 import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (onInput)
-import Product.Styles as Styles
+import Components.Styles as Styles
 import Models
 import Messages exposing(..)
 import String exposing (fromInt)

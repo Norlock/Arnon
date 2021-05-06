@@ -5,7 +5,9 @@ shop frontend
 
 ### Frontend
 - [ ] Frontend
-- [ ] Hover
+- [x] Hover
+- [ ] Setup routing
+- [ ] Move all styles to scss
 
 ### Backend
 - [ ] Get products

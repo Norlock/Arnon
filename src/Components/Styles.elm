@@ -1,4 +1,4 @@
-module Product.Styles exposing (..)
+module Components.Styles exposing (..)
 import Styles exposing (AttrList)
 import Html.Attributes exposing (style)
 

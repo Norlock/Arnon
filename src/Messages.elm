@@ -3,12 +3,12 @@ import Browser
 import Url
 
 type Msg
-  = ForMain MainMsg
+  = ForHome HomeMsg
   | ForProduct ProductMsg
   | ChangedUrl Url.Url
   | ClickedLink Browser.UrlRequest
 
-type MainMsg
+type HomeMsg
   = Increment
   | Decrement
   | Change String

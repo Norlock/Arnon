@@ -1,11 +1,15 @@
 module Models exposing (..)
+import Url 
 
-type alias Main = 
+type alias Home = 
   { count: Int, message: String }
     
 type alias Product = 
   { quantity: Int, price: Int, purchase: Bool }
 
-type alias Model =
-  { main: Main,
-    product: Product }
+
+-- Models split by entities, (product, productlist, user, etc) 
+type alias Shared =
+  { home: Home,
+    product: Product,
+    page: Url.Url }
