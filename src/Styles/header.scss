@@ -1,0 +1,40 @@
+$background-navbar: #a2c2f2;
+
+.header {
+    .navbar {
+        background-color: $background-navbar;
+        margin: 20px;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .navbar-list {
+        background-color: $background-navbar;
+        list-style-type: none;
+        display: flex;
+        flex-direction: row;
+    }
+
+    .navbar-item {
+        padding: 20px;
+        display: grid;
+        align-items: center;
+        cursor: pointer;
+        background-color: purple;
+
+        &:hover {
+            background-color: violet;
+        }
+    }
+
+    .login-container {
+        background-color: #22a2a2;
+        padding: 20px;
+        margin-right: 20px;
+        display: grid;
+        align-items: center;
+        cursor: pointer;
+    }
+}

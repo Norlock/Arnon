@@ -3,7 +3,6 @@ module Components.Product exposing (..)
 import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (onInput)
-import Components.Styles as Styles
 import Models
 import Messages exposing(..)
 import String exposing (fromInt)
@@ -26,8 +25,8 @@ calculatePrice model =
 
 product : Models.Product -> Html Msg
 product model = 
-  div (Styles.container [])
-    [ div (Styles.left []) 
+  div [ class "product" ]
+    [ div [ class "left" ]
       [ span [] [text "Shoes"]
       , span [] [text "Very good looking shoes"]
       , img 
@@ -35,7 +34,7 @@ product model =
         , width 300
         , height 300] []
       ]
-    , div (Styles.right [])
+    , div [ class "right" ]
       [ span [] [ text ("Price: " ++ fromInt (calculatePrice model)) ] 
       , label [] [ text "Quantity" ]
       , input [ type_ "number"

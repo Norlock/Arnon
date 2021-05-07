@@ -3,7 +3,6 @@ import Models
 import Messages exposing (HomeMsg(..))
 import Html exposing (..)
 import Messages exposing (Msg)
-import Styles
 import Components.Product as Product
 import Components.Header as Header
 import Html.Attributes exposing (..)
@@ -24,7 +23,7 @@ update msg model =
 
 view : Models.Shared -> Html Msg
 view model =
-   div (Styles.container [])
-      [ Header.header 
-      , div [] [ Product.product model.product ]
-      ]
+  div [ class "page-container" ]
+    [ Header.header 
+    , div [] [ Product.product model.product ]
+    ]
