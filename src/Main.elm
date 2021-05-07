@@ -3,7 +3,6 @@ module Main exposing (..)
 import Browser
 import Browser.Navigation as Nav
 
-import Styles
 import Models 
 import Html exposing (..)
 import Html.Events exposing (..)
@@ -43,6 +42,8 @@ update msg model =
       ({ model | product = (Product.update forProduct model.product) }
       , Cmd.none)
     ChangedUrl url ->
+      let _ = Debug.log url.path 
+      in
       ({ model | page = url }, Cmd.none)
     ClickedLink _ ->
       (model, Cmd.none)
@@ -51,33 +52,15 @@ subscriptions : Models.Shared -> Sub Msg
 subscriptions _ =
   Sub.none
 
-navbar : List String -> Html Msg
-navbar tabTitles =
-    tabTitles 
-      |> List.map
-        (\title ->
-          li (Styles.navbarItem [class "nav-item"]) [ text title ]
-        )
-      |> ul (Styles.navbarList [])
-
-header :  Html Msg
-header = 
-  div [] 
-      [ h1 [] [text "Fashion store"]
-      , div (Styles.navbar []) 
-        [ navbar ["Home", "Fashion", "Discount", "Contact"] 
-        , span (Styles.loginContainer []) [ text "login" ]
-        ]
-      ]
-
 -- VIEW
 -- 
 view : Models.Shared -> Browser.Document Msg
 view model =
-  --let dummy = Debug.log model.page.path
+  let _ = Debug.log model.page.path
+  in
   if model.page.path == "src/Home.elm" then
     { title = "Home"
-    , body = [ div [] []]
+    , body = [ Home.view model ]
     }
   else
     { title = "Not Found"

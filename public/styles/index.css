@@ -1,0 +1,17 @@
+body {
+  background-color: #aaa;
+  padding: 20px;
+}
+
+.nav-item {
+  background-color: purple;
+}
+.nav-item:hover {
+  background-color: orange;
+}
+
+P {
+  padding: 10px;
+}
+
+/*# sourceMappingURL=index.css.map */

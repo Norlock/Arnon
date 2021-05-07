@@ -28,5 +28,4 @@ view model =
       [ Header.header 
       , div [] [ text "Hello world!" ]
       , div [] [ Product.product model.product ]
-      , node "link" [ rel "stylesheet", href "/css/index.css" ] []
       ]

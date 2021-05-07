@@ -2,7 +2,7 @@ module Components.Header exposing (header)
 import Html exposing (..)
 import Messages exposing (Msg)
 import Styles
-import Html.Attributes exposing (class)
+import Html.Attributes exposing (..)
 
 navbar : List String -> Html Msg
 navbar tabTitles =
@@ -16,7 +16,8 @@ navbar tabTitles =
 header :  Html Msg
 header = 
   div [] 
-      [ h1 [] [text "Fashion store"]
+      [ node "link" [ rel "stylesheet", href "/public/styles/index.css" ] []
+      , h1 [] [text "Fashion store"]
       , div (Styles.navbar []) 
         [ navbar ["Home", "Fashion", "Discount", "Contact"] 
         , span (Styles.loginContainer []) [ text "login" ]
