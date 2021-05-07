@@ -7,7 +7,7 @@ shop frontend
 - [x] Snowpack 
 - [x] Hover
 - [ ] Setup routing
-- [ ] Move all styles to scss
+- [x] Move all styles to scss
 
 ### Backend
 - [ ] Get products

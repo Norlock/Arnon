@@ -9,6 +9,7 @@ import Html.Events exposing (..)
 import Html.Attributes exposing (..)
 import Components.Product as Product
 import Pages.Home as Home
+import Pages.NotFound as NotFound
 import Messages exposing (..)
 import Url
 
@@ -29,8 +30,6 @@ init _ url _ =
 
 initModel : Url.Url -> Models.Shared
 initModel url =
-  let _ = Debug.log "url" url
-  in
   { product = Product.init, home = Home.init, page = url } 
 
 update : Msg -> Models.Shared -> (Models.Shared, Cmd Msg)
@@ -59,11 +58,6 @@ view model =
   let _ = Debug.log model.page.path
   in
   if model.page.path == "/" then
-    { title = "Arnon shop framework"
-    , body = [ Home.view model ]
-    }
+    Home.document model
   else
-    -- Todo create 404 page
-    { title = "Not Found"
-    ,  body = [ text "Not Found" ]
-    }
+    NotFound.document
