@@ -4,7 +4,7 @@ shop frontend
 ## Roadmap
 
 ### Frontend
-- [ ] Frontend
+- [x] Snowpack 
 - [x] Hover
 - [ ] Setup routing
 - [ ] Move all styles to scss

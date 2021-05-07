@@ -7,7 +7,6 @@ import Models
 import Html exposing (..)
 import Html.Events exposing (..)
 import Html.Attributes exposing (..)
-import Debug exposing (log)
 import Components.Product as Product
 import Pages.Home as Home
 import Messages exposing (..)
@@ -30,6 +29,8 @@ init _ url _ =
 
 initModel : Url.Url -> Models.Shared
 initModel url =
+  let _ = Debug.log "url" url
+  in
   { product = Product.init, home = Home.init, page = url } 
 
 update : Msg -> Models.Shared -> (Models.Shared, Cmd Msg)
@@ -53,26 +54,16 @@ subscriptions _ =
   Sub.none
 
 -- VIEW
--- 
 view : Models.Shared -> Browser.Document Msg
 view model =
   let _ = Debug.log model.page.path
   in
-  if model.page.path == "src/Home.elm" then
-    { title = "Home"
+  if model.page.path == "/" then
+    { title = "Arnon shop framework"
     , body = [ Home.view model ]
     }
   else
+    -- Todo create 404 page
     { title = "Not Found"
-    ,  body = [ Home.view model ]
+    ,  body = [ text "Not Found" ]
     }
-  --{ title = "Home"
-  --, body = [
-    --div (Styles.container [])
-      --[ header 
-      --, div [] [ text "Hello world!" ]
-      --, div [] [ Product.product model.product ]
-      --, node "link" [ rel "stylesheet", href "/css/index.css" ] []
-      --]
-    --]
-  --}

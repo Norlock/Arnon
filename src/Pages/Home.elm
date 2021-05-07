@@ -26,6 +26,5 @@ view : Models.Shared -> Html Msg
 view model =
    div (Styles.container [])
       [ Header.header 
-      , div [] [ text "Hello world!" ]
       , div [] [ Product.product model.product ]
       ]

@@ -16,8 +16,7 @@ navbar tabTitles =
 header :  Html Msg
 header = 
   div [] 
-      [ node "link" [ rel "stylesheet", href "/public/styles/index.css" ] []
-      , h1 [] [text "Fashion store"]
+      [ h1 [] [text "Fashion store"]
       , div (Styles.navbar []) 
         [ navbar ["Home", "Fashion", "Discount", "Contact"] 
         , span (Styles.loginContainer []) [ text "login" ]
