@@ -1,0 +1,23 @@
+.product-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, 200px);
+    grid-gap: 1rem;
+    justify-content: space-between;
+
+    .product-item {
+        display: flex;
+        flex-direction: column;
+        cursor: pointer;
+    }
+
+    .title {
+        font-size: 18px;
+        font-weight: bold;
+        margin-top: 5px;
+    }
+
+    .price {
+        margin-top: 3px;
+        font-size: 15px;
+    }
+}

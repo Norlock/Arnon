@@ -8,6 +8,7 @@ import Html exposing (..)
 import Html.Events exposing (..)
 import Html.Attributes exposing (..)
 import Components.Product as Product
+import Components.ProductList as ProductList
 import Pages.Home as Home
 import Pages.NotFound as NotFound
 import Messages exposing (..)
@@ -30,7 +31,7 @@ init _ url _ =
 
 initModel : Url.Url -> Models.Shared
 initModel url =
-  { product = Product.init, home = Home.init, page = url } 
+  { product = Product.init, products = ProductList.init, home = Home.init, page = url } 
 
 update : Msg -> Models.Shared -> (Models.Shared, Cmd Msg)
 update msg model =
@@ -59,5 +60,6 @@ view model =
   in
   if model.page.path == "/" then
     Home.document model
+  --else if model.page.
   else
     NotFound.document
