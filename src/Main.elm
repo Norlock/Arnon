@@ -36,6 +36,8 @@ init _ url key =
 
 initModel : Url.Url -> Nav.Key -> Models.Shared
 initModel url key =
+  let _ = Debug.log "key" key
+  in
   { product = Product.init, products = ProductList.init, home = Home.init, url = url
   , key = key } 
 
@@ -51,8 +53,6 @@ update msg model =
     ChangedUrl url ->
       ({ model | url = url }, Cmd.none)
     ClickedLink urlRequest ->
-      let _ = Debug.log "req" urlRequest
-      in
       case urlRequest of
         Browser.Internal url ->
           ( model, Nav.pushUrl model.key (Url.toString url) )
