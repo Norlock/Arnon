@@ -1,4 +1,6 @@
 module Models exposing (..)
+
+import Browser.Navigation as Nav
 import Url 
 
 type alias Home = 
@@ -17,4 +19,6 @@ type alias Shared =
   { home: Home,
     product: Product,
     products: ProductList,
-    page: Url.Url }
+    key: Nav.Key,
+    url: Url.Url }
+

@@ -22,6 +22,8 @@ $background-navbar: #a2c2f2;
     .navbar-item {
         padding: 20px;
         display: grid;
+        text-decoration: none;
+        color: black;
         align-items: center;
         cursor: pointer;
         background-color: purple;

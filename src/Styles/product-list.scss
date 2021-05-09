@@ -4,10 +4,11 @@
     grid-gap: 1rem;
     justify-content: space-between;
 
-    .product-item {
+    .product-item a {
         display: flex;
         flex-direction: column;
-        cursor: pointer;
+        text-decoration: none;
+        color: black;
     }
 
     .title {

@@ -17,8 +17,7 @@ import Pages.NotFound as NotFound
 
 import Messages exposing (..)
 import Url
-import Url.Parser as P exposing ((</>))
-import Route exposing (Route)
+import Route
 
 -- MAIN
 main =
@@ -32,12 +31,13 @@ main =
   }
 
 init : () -> Url.Url -> Nav.Key -> (Models.Shared, Cmd msg )
-init _ url _ = 
-  ((initModel url), Cmd.none) 
+init _ url key = 
+  ((initModel url key), Cmd.none) 
 
-initModel : Url.Url -> Models.Shared
-initModel url =
-  { product = Product.init, products = ProductList.init, home = Home.init, page = url } 
+initModel : Url.Url -> Nav.Key -> Models.Shared
+initModel url key =
+  { product = Product.init, products = ProductList.init, home = Home.init, url = url
+  , key = key } 
 
 update : Msg -> Models.Shared -> (Models.Shared, Cmd Msg)
 update msg model =
@@ -49,11 +49,16 @@ update msg model =
       ({ model | product = (Product.update forProduct model.product) }
       , Cmd.none)
     ChangedUrl url ->
-      let _ = Debug.log url.path 
+      ({ model | url = url }, Cmd.none)
+    ClickedLink urlRequest ->
+      let _ = Debug.log "req" urlRequest
       in
-      ({ model | page = url }, Cmd.none)
-    ClickedLink _ ->
-      (model, Cmd.none)
+      case urlRequest of
+        Browser.Internal url ->
+          ( model, Nav.pushUrl model.key (Url.toString url) )
+        Browser.External href ->
+          ( model, Nav.load href )
+
 
 subscriptions : Models.Shared -> Sub Msg
 subscriptions _ =
@@ -62,9 +67,7 @@ subscriptions _ =
 -- VIEW
 view : Models.Shared -> Browser.Document Msg
 view model =
-  let _ = Debug.log "Route" (Route.parseUrl model.page)
-  in
-  case (Route.parseUrl model.page) of
+  case (Route.parseUrl model.url) of
     Route.Home -> 
       Home.document model
     Route.Product _ ->

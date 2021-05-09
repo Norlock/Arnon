@@ -6,8 +6,10 @@ shop frontend
 ### Frontend
 - [x] Snowpack 
 - [x] Hover
-- [ ] Setup routing
+- [x] Setup routing
 - [x] Move all styles to scss
+- [ ] Setup breadcrumbs
+- [ ] Write tests
 
 ### Backend
 - [ ] Get products

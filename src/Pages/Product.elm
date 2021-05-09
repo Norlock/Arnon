@@ -12,7 +12,7 @@ view : Models.Shared -> Html Msg
 view model =
   div [ class "page-container" ]
     [ Header.header 
-    , div [] [ Product.view model.product ]
+    , Product.view model.product
     ]
 
 document : Models.Shared -> Browser.Document Msg

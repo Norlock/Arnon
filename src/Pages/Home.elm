@@ -3,7 +3,6 @@ import Models
 import Messages exposing (HomeMsg(..))
 import Html exposing (..)
 import Messages exposing (Msg)
-import Components.Product as Product
 import Components.ProductList as ProductList
 import Components.Header as Header
 import Html.Attributes exposing (..)
@@ -27,7 +26,7 @@ view : Models.Shared -> Html Msg
 view model =
   div [ class "page-container" ]
     [ Header.header 
-    , div [] [ ProductList.view model.products ]
+    , ProductList.view model.products
     ]
 
 document : Models.Shared -> Browser.Document Msg
