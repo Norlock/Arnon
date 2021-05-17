@@ -18,6 +18,12 @@ import Pages.NotFound as NotFound
 import Messages exposing (..)
 import Url
 import Route
+import Url exposing (Protocol(..))
+import Http
+import Messages exposing (FetchMsg(..))
+import Json.Decode exposing (Decoder)
+import Json.Decode exposing (field)
+import Json.Decode exposing (string)
 
 -- MAIN
 main =
@@ -32,12 +38,19 @@ main =
 
 init : () -> Url.Url -> Nav.Key -> (Models.Shared, Cmd msg )
 init _ url key = 
-  ((initModel url key), Cmd.none) 
+  ((initModel url key)
+  , Http.get 
+      { url = "http:localhost:8000/products"
+      , expect = Http.expectJson FetchProducts productsDecoder
+      }
+  ) 
+
+productsDecoder : Decoder String
+productsDecoder =
+  field "data" (field "image_url" string)
 
 initModel : Url.Url -> Nav.Key -> Models.Shared
 initModel url key =
-  let _ = Debug.log "key" key
-  in
   { product = Product.init, products = ProductList.init, home = Home.init, url = url
   , key = key } 
 

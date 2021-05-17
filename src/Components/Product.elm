@@ -9,7 +9,7 @@ import String exposing (fromInt)
 
 init : Models.Product
 init = 
-  { quantity = 1, price = 20, purchase = False, title = "Shoes", description = "Very good looking shoes" } 
+  { quantity = 1, price = 20, stock = 3, title = "Shoes", description = "Very good looking shoes" } 
 
 update : ProductMsg -> Models.Product -> Models.Product
 update msg model =
@@ -17,7 +17,7 @@ update msg model =
     Quantity value ->
       { model | quantity = String.toInt value |> Maybe.withDefault 1 } 
     Purchase ->
-      { model | purchase = True } 
+      { model | stock = model.stock - 1 } 
 
 calculatePrice : Models.Product -> Int
 calculatePrice model =

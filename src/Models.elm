@@ -7,7 +7,7 @@ type alias Home =
   { count: Int, message: String }
     
 type alias Product = 
-  { quantity: Int, price: Int, purchase: Bool, title: String, description: String }
+  { quantity: Int, price: Int, stock: Int, title: String, description: String }
 
 type alias ProductItem = { id: Int, title: String, price: Float }
 
