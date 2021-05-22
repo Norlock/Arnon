@@ -2,13 +2,14 @@ module Messages exposing (..)
 import Browser
 import Url
 import Http
+import Models exposing (ProductItem)
 
 type Msg
   = ForHome HomeMsg
   | ForProduct ProductMsg
   | ChangedUrl Url.Url
   | ClickedLink Browser.UrlRequest
-  | FetchMsg
+  | GotProducts (Result Http.Error (List ProductItem))
 
 type HomeMsg
   = Increment
@@ -18,6 +19,3 @@ type HomeMsg
 type ProductMsg
   = Quantity String
   | Purchase
-
-type FetchMsg
-  = FetchProducts (Result Http.Error String)

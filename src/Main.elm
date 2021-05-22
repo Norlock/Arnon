@@ -15,15 +15,12 @@ import Pages.Home as Home
 import Pages.Product as Product
 import Pages.NotFound as NotFound
 
-import Messages exposing (..)
-import Url
 import Route
 import Url exposing (Protocol(..))
-import Http
-import Messages exposing (FetchMsg(..))
-import Json.Decode exposing (Decoder)
-import Json.Decode exposing (field)
-import Json.Decode exposing (string)
+import Messages exposing (..)
+import Api 
+import Result exposing (Result(..))
+import Json.Decode exposing (Error(..))
 
 -- MAIN
 main =
@@ -36,18 +33,11 @@ main =
     onUrlRequest = ClickedLink
   }
 
-init : () -> Url.Url -> Nav.Key -> (Models.Shared, Cmd msg )
+init : () -> Url.Url -> Nav.Key -> (Models.Shared, Cmd Msg)
 init _ url key = 
   ((initModel url key)
-  , Http.get 
-      { url = "http:localhost:8000/products"
-      , expect = Http.expectJson FetchProducts productsDecoder
-      }
+  , Api.fetchProducts
   ) 
-
-productsDecoder : Decoder String
-productsDecoder =
-  field "data" (field "image_url" string)
 
 initModel : Url.Url -> Nav.Key -> Models.Shared
 initModel url key =
@@ -71,7 +61,14 @@ update msg model =
           ( model, Nav.pushUrl model.key (Url.toString url) )
         Browser.External href ->
           ( model, Nav.load href )
-
+    GotProducts result ->
+      case result of 
+        Ok res ->
+          let _ = Debug.log "TestTest"
+          in
+          ({ model | products = res }, Cmd.none)
+        Err err ->
+          ( model, Cmd.none)
 
 subscriptions : Models.Shared -> Sub Msg
 subscriptions _ =

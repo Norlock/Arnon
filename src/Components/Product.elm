@@ -5,11 +5,11 @@ import Html.Attributes exposing (..)
 import Html.Events exposing (onInput)
 import Models
 import Messages exposing(..)
-import String exposing (fromInt)
+import String exposing (fromFloat)
 
 init : Models.Product
 init = 
-  { quantity = 1, price = 20, stock = 3, title = "Shoes", description = "Very good looking shoes" } 
+  { id = 1, quantity = 1, price = 20, stock = 3, title = "Shoes", description = "Very good looking shoes" } 
 
 update : ProductMsg -> Models.Product -> Models.Product
 update msg model =
@@ -19,9 +19,9 @@ update msg model =
     Purchase ->
       { model | stock = model.stock - 1 } 
 
-calculatePrice : Models.Product -> Int
+calculatePrice : Models.Product -> Float
 calculatePrice model =
-  model.quantity * model.price
+  toFloat model.quantity * model.price
 
 view : Models.Product -> Html Msg
 view model = 
@@ -35,7 +35,7 @@ view model =
         , height 300] []
       ]
     , div [ class "right" ]
-      [ span [] [ text ("Price: " ++ fromInt (calculatePrice model)) ] 
+      [ span [] [ text ("Price: " ++ fromFloat (calculatePrice model)) ] 
       , label [] [ text "Quantity" ]
       , input [ type_ "number"
               , value (String.fromInt model.quantity)

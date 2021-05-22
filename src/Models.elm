@@ -7,9 +7,21 @@ type alias Home =
   { count: Int, message: String }
     
 type alias Product = 
-  { quantity: Int, price: Int, stock: Int, title: String, description: String }
+  { id: Int 
+  , quantity: Int
+  , title: String
+  , description: String 
+  , price: Float
+  , stock: Int
+  }
 
-type alias ProductItem = { id: Int, title: String, price: Float }
+type alias ProductItem = 
+  { id: Int
+  , title: String
+  , description: String
+  , price: Float 
+  , stock: Int 
+  }
 
 type alias ProductList = List ProductItem
 
