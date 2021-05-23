@@ -11,6 +11,8 @@ type alias Product =
   , quantity: Int
   , title: String
   , description: String 
+  , brand: String
+  , size: String
   , price: Float
   , stock: Int
   }
@@ -25,11 +27,9 @@ type alias ProductItem =
 
 type alias ProductList = List ProductItem
 
-
--- Models split by entities, (product, productlist, user, etc) 
 type alias Shared =
   { home: Home,
-    product: Product,
+    product: Maybe Product,
     products: ProductList,
     key: Nav.Key,
     url: Url.Url }

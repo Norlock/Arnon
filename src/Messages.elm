@@ -9,7 +9,7 @@ type Msg
   | ForProduct ProductMsg
   | ChangedUrl Url.Url
   | ClickedLink Browser.UrlRequest
-  | GotProducts (Result Http.Error (List ProductItem))
+  | ReceivedProducts (Result Http.Error (List ProductItem))
 
 type HomeMsg
   = Increment

@@ -8,7 +8,6 @@ import Html exposing (..)
 import Html.Events exposing (..)
 import Html.Attributes exposing (..)
 
-import Components.Product as Product
 import Components.ProductList as ProductList
 
 import Pages.Home as Home
@@ -21,6 +20,7 @@ import Messages exposing (..)
 import Api 
 import Result exposing (Result(..))
 import Json.Decode exposing (Error(..))
+import Maybe exposing (andThen)
 
 -- MAIN
 main =
@@ -48,27 +48,28 @@ update : Msg -> Models.Shared -> (Models.Shared, Cmd Msg)
 update msg model =
   case msg of
     ForHome forHome ->
-      ({ model | home = (Home.update forHome model.home) }
+      ({ model | home = Home.update forHome model.home }
       , Cmd.none)
     ForProduct forProduct ->
-      ({ model | product = (Product.update forProduct model.product) }
-      , Cmd.none)
+      case model.product of 
+        Just product ->
+          ({ model | product = Just (Product.update forProduct product) }, Cmd.none)
+        Nothing ->
+          (model, Cmd.none)
     ChangedUrl url ->
-      ({ model | url = url }, Cmd.none)
+      ({ model | url = url }
+        |> Product.setProduct, Cmd.none)
     ClickedLink urlRequest ->
       case urlRequest of
         Browser.Internal url ->
           ( model, Nav.pushUrl model.key (Url.toString url) )
         Browser.External href ->
           ( model, Nav.load href )
-    GotProducts result ->
-      case result of 
-        Ok res ->
-          let _ = Debug.log "TestTest"
-          in
-          ({ model | products = res }, Cmd.none)
-        Err err ->
-          ( model, Cmd.none)
+    ReceivedProducts (Ok result) ->
+      (Product.setProductList model result 
+        |> Product.setProduct, Cmd.none)
+    ReceivedProducts (Err _) ->
+      ( model, Cmd.none)
 
 subscriptions : Models.Shared -> Sub Msg
 subscriptions _ =
@@ -80,7 +81,7 @@ view model =
   case (Route.parseUrl model.url) of
     Route.Home -> 
       Home.document model
-    Route.Product _ ->
-      Product.document model
+    Route.Product id ->
+      Product.document model id
     Route.NotFound ->
       NotFound.document

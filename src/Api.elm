@@ -9,7 +9,7 @@ fetchProducts : Cmd Msg
 fetchProducts =
   Http.get 
     { url = "http://localhost:8000/products"
-    , expect = Http.expectJson GotProducts productListDecoder
+    , expect = Http.expectJson ReceivedProducts productListDecoder
     }
 
 productDecoder: Decoder ProductItem
