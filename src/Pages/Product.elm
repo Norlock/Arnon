@@ -10,7 +10,7 @@ import Messages exposing (ProductMsg(..))
 import Messages exposing (Msg(..))
 import Html.Events exposing (onInput)
 import Maybe exposing (Maybe(..))
-import Route exposing (Route)
+import Route 
 
 init : Maybe Models.Product
 init = 
@@ -24,14 +24,14 @@ update msg product =
     Purchase ->
       { product | stock = product.stock - 1 } 
 
-document : Models.Shared -> Int -> Browser.Document Msg
-document model id =
+document : Models.Shared -> Browser.Document Msg
+document model =
     { title = "Arnon shop framework"
-    , body = [ view model id ]
+    , body = [ view model ]
     }
 
-view : Models.Shared -> Int -> Html Msg
-view model id =
+view : Models.Shared -> Html Msg
+view model =
   case model.product of 
     Just product -> 
       div [ class "page-container" ]

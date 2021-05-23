@@ -20,7 +20,6 @@ import Messages exposing (..)
 import Api 
 import Result exposing (Result(..))
 import Json.Decode exposing (Error(..))
-import Maybe exposing (andThen)
 
 -- MAIN
 main =
@@ -81,7 +80,7 @@ view model =
   case (Route.parseUrl model.url) of
     Route.Home -> 
       Home.document model
-    Route.Product id ->
-      Product.document model id
+    Route.Product _ ->
+      Product.document model
     Route.NotFound ->
       NotFound.document
