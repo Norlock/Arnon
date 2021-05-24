@@ -1,8 +1,8 @@
 module Components.Header exposing (header)
 import Html exposing (..)
-import Messages exposing (Msg)
 import Html.Attributes exposing (..)
 import Tuple exposing (first, second)
+import Types exposing (Msg)
 
 navbar : List (String, String) -> Html Msg
 navbar tabs =

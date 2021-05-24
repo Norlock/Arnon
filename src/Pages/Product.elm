@@ -1,22 +1,19 @@
 module Pages.Product exposing (document, init, update, setProduct, setProductList)
 
 import Components.Header as Header
-import Models
+import Types
 import Browser
 import Html exposing (..)
 import Html.Attributes exposing (..)
-import Maybe exposing (Maybe(..))
-import Messages exposing (ProductMsg(..))
-import Messages exposing (Msg(..))
 import Html.Events exposing (onInput)
 import Maybe exposing (Maybe(..))
-import Route 
+import Types exposing (..)
 
-init : Maybe Models.Product
+init : Maybe Types.Product
 init = 
   Nothing
 
-update : ProductMsg -> Models.Product -> Models.Product
+update : ProductMsg -> Product -> Product
 update msg product =
   case msg of
     Quantity value ->
@@ -24,27 +21,27 @@ update msg product =
     Purchase ->
       { product | stock = product.stock - 1 } 
 
-document : Models.Shared -> Browser.Document Msg
-document model =
-    { title = "Arnon shop framework"
-    , body = [ view model ]
-    }
+document : Types.State Product -> Browser.Document Msg
+document state =
+  { title = "Arnon shop framework"
+  , body = [ view state ]
+  }
 
-view : Models.Shared -> Html Msg
-view model =
-  case model.product of 
-    Just product -> 
+view : Types.State Product -> Html Msg
+view state =
+  case state of 
+    Types.Success product ->
       div [ class "page-container" ]
         [ Header.header 
         , productView product
         ]
-    Nothing -> 
+    _ -> 
       div [ class "page-container" ]
         [ Header.header 
         , text "No product"
         ]
 
-productView : Models.Product -> Html Msg
+productView : Product -> Html Msg
 productView model = 
   div [ class "product" ]
     [ div [ class "left" ]
@@ -66,11 +63,11 @@ productView model =
       ]
     ]
     
-calculatePrice : Models.Product -> Float
+calculatePrice : Product -> Float
 calculatePrice model =
   toFloat model.quantity * model.price
 
-getElementById : Models.ProductList -> Int -> Maybe Models.ProductItem 
+getElementById : List ProductItem -> Int -> Maybe ProductItem 
 getElementById productList id =
     case productList of
       (element::tail) ->
@@ -81,23 +78,19 @@ getElementById productList id =
       [] ->
         Nothing
 
-setProductList : Models.Shared -> List Models.ProductItem -> Models.Shared 
+setProductList : Model -> List ProductItem -> Model 
 setProductList model products =
-  { model | products = products }
+  { model | products = Success products }
 
-setProduct : Models.Shared -> Models.Shared 
-setProduct model =
-  case Route.parseUrl model.url of 
-    Route.Product id -> 
-      case (getElementById model.products id) of
-        Just res -> 
-          { model | product = Just (convertItemToProduct res) }
-        Nothing ->
-          model
-    _ ->
+setProduct : Model -> List ProductItem -> Int -> Model 
+setProduct model products id =
+  case (getElementById products id) of
+    Just res -> 
+      { model | product = Success (convertItemToProduct res) }
+    Nothing ->
       model
 
-convertItemToProduct : Models.ProductItem -> Models.Product 
+convertItemToProduct : ProductItem -> Product 
 convertItemToProduct item =
   { id = item.id
   , quantity = 1

@@ -1,36 +1,44 @@
-module Pages.Home exposing (init, update, document)
-import Models
-import Messages exposing (HomeMsg(..))
+module Pages.Home exposing (document)
 import Html exposing (..)
-import Messages exposing (Msg)
-import Components.ProductList as ProductList
 import Components.Header as Header
 import Html.Attributes exposing (..)
 import Browser
+import Types exposing (..)
 
-init : Models.Home
-init = 
-  { count = 0, message = "test" } 
-
-update : HomeMsg -> Models.Home -> Models.Home
-update msg model =
-  case msg of
-    Increment ->
-      { model | count = model.count + 1 } 
-    Decrement ->
-      { model | count = model.count - 1 }
-    Change newMessage -> 
-      { model | message = newMessage }
-
-view : Models.Shared -> Html Msg
+view : Types.Model -> Html Types.Msg
 view model =
   div [ class "page-container" ]
     [ Header.header 
-    , ProductList.view model.products
+    , productsView model
     ]
 
-document : Models.Shared -> Browser.Document Msg
+document : Types.Model -> Browser.Document Types.Msg
 document model =
     { title = "Arnon shop framework"
     , body = [ view model ]
     }
+
+productsView : Types.Model -> Html Msg
+productsView model = 
+  case model.products of
+    Success list ->
+      list 
+      |> List.map
+      (\product ->
+        div [ class "product-item" ]
+          [ a [ href ("/product/" ++ String.fromInt product.id) ] 
+            [ img 
+              [ src "http://images6.fanpop.com/image/photos/41000000/38976356-cool-hd-wallpapers-bambidkar-41031277-2880-1800.jpg" 
+              , width 200
+              , height 200] []
+            , span [class "title"] [text product.title]
+            , span [class "price"] [text (String.fromFloat product.price)]
+            ]
+          ]
+        )
+        |> div [ class "product-list"] 
+    Loading ->
+      div [ class "product-list" ] [ text "Products are loading" ]
+    Failed ->
+      div [ class "product-list" ] [ text "No products received" ]
+

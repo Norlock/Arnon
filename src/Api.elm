@@ -1,9 +1,9 @@
 module Api exposing(..)
 import Url exposing (Protocol(..))
 import Http
-import Messages exposing (Msg(..))
 import Json.Decode exposing (Decoder, string, list, float, field, int, map5)
-import Models exposing (ProductItem)
+import Types exposing (ProductItem)
+import Types exposing (Msg(..))
 
 fetchProducts : Cmd Msg 
 fetchProducts =

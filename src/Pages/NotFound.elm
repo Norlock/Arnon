@@ -1,9 +1,9 @@
 module Pages.NotFound exposing(..)
 import Html exposing (text)
 import Browser
-import Messages exposing (Msg)
+import Types
 
-document : Browser.Document Msg
+document : Browser.Document Types.Msg
 document =
     { title = "Arnon shop framework"
     , body = [ text "404 Page not found" ]
