@@ -16,3 +16,19 @@
         padding: 20px;
     }
 }
+
+.breadcrumb {
+    list-style-type: none;
+    margin-bottom: 15px;
+    margin-left: 5px;
+
+    a {
+        text-decoration: none;
+        padding: 3px;
+        background-color: #003;
+        border-radius: 3px;
+        color: white;
+
+    }
+
+}

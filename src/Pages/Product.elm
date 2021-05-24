@@ -1,6 +1,7 @@
 module Pages.Product exposing (document, init, update, setProduct, setProductList)
 
 import Components.Header as Header
+import Components.Footer as Footer
 import Types
 import Browser
 import Html exposing (..)
@@ -33,12 +34,16 @@ view state =
     Types.Success product ->
       div [ class "page-container" ]
         [ Header.header 
+        , breadcrumb
         , productView product
+        , Footer.footer
         ]
     _ -> 
       div [ class "page-container" ]
         [ Header.header 
+        , breadcrumb
         , text "No product"
+        , Footer.footer
         ]
 
 productView : Product -> Html Msg
@@ -60,6 +65,14 @@ productView model =
               , onInput (ForProduct << Quantity)
               , Html.Attributes.min "1"] [ ]
       , button [] [ text "Purchase" ]
+      ]
+    ]
+
+breadcrumb : Html Msg
+breadcrumb =
+  ul [ class "breadcrumb" ] 
+    [ li [] 
+      [ a [ href "/" ] [ text "> products" ]
       ]
     ]
     

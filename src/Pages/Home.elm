@@ -1,6 +1,7 @@
 module Pages.Home exposing (document)
 import Html exposing (..)
 import Components.Header as Header
+import Components.Footer as Footer
 import Html.Attributes exposing (..)
 import Browser
 import Types exposing (..)
@@ -10,6 +11,7 @@ view model =
   div [ class "page-container" ]
     [ Header.header 
     , productsView model
+    , Footer.footer
     ]
 
 document : Types.Model -> Browser.Document Types.Msg

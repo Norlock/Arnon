@@ -62,7 +62,7 @@ update msg model =
       (Product.setProductList model result 
         |> initProduct, Cmd.none)
     ReceivedProducts (Err _) ->
-      ( model, Cmd.none)
+      ({ model | products = Failed}, Cmd.none)
 
 initProduct : Model -> Model
 initProduct model =
