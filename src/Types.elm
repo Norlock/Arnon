@@ -38,9 +38,13 @@ type State a
 
 type Msg
   = ForProduct ProductMsg
+  | ForProductList ProductListMsg
   | ChangedUrl Url.Url
   | ClickedLink Browser.UrlRequest
   | ReceivedProducts (Result Http.Error (List ProductItem))
+
+type ProductListMsg 
+  = Filter String
 
 type ProductMsg
   = Quantity String

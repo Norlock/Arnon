@@ -43,12 +43,10 @@ initModel url key =
 update : Msg -> Model -> (Model, Cmd Msg)
 update msg model =
   case msg of
-    ForProduct forProduct ->
-      case model.product of 
-        Success product ->
-          ({ model | product = Success (Product.update forProduct product) }, Cmd.none)
-        _ ->
-          (model, Cmd.none)
+    ForProduct subMsg ->
+      (updateProduct model subMsg, Cmd.none) 
+    ForProductList subMsg ->
+      (updateProductList model subMsg, Cmd.none)
     ChangedUrl url ->
       ({ model | url = url }
         |> initProduct, Cmd.none)
@@ -63,6 +61,22 @@ update msg model =
         |> initProduct, Cmd.none)
     ReceivedProducts (Err _) ->
       ({ model | products = Failed}, Cmd.none)
+
+updateProduct : Model -> ProductMsg -> Model
+updateProduct model msg =
+  case model.product of
+    Success product ->
+      { model | product = Success (Product.update msg product) }
+    _ ->
+      model
+
+-- Todo make filter function
+updateProductList : Model -> ProductListMsg -> Model
+updateProductList model msg =
+  case msg of
+    Filter _ -> 
+      model
+
 
 initProduct : Model -> Model
 initProduct model =
