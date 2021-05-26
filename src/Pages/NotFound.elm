@@ -1,7 +1,9 @@
-module Pages.NotFound exposing(..)
-import Html exposing (text)
+module Pages.NotFound exposing (..)
+
 import Browser
+import Html exposing (text)
 import Types
+
 
 document : Browser.Document Types.Msg
 document =

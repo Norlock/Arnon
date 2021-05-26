@@ -5,7 +5,8 @@
   "main": "elm.js",
   "scripts": {
     "start": "snowpack dev",
-    "test": "elm-test"
+    "test": "elm-test",
+    "format": "elm-format src/"
   },
   "repository": {
     "type": "git",
@@ -22,6 +23,7 @@
     "sass": "^1.32.12"
   },
   "devDependencies": {
+    "elm-format": "^0.8.5",
     "elm-test": "*",
     "snowpack": "^3.3.7",
     "snowpack-plugin-elm": "^0.4.3"

@@ -1,6 +1,11 @@
 # Arnon
 shop frontend
 
+```sh
+npm i
+npm start
+```
+
 ## Roadmap
 
 ### Frontend
