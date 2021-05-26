@@ -13,19 +13,20 @@ type alias ProductItem =
   , stock: Int 
   }
 
-type alias Product = 
-  { id: Int 
-  , quantity: Int
-  , title: String
-  , description: String 
-  , brand: String
+type alias ProductDetail = 
+  { brand: String
   , size: String
-  , price: Float
-  , stock: Int
+  , color: String
+  }
+
+type alias ProductLarge = 
+  { basic: ProductItem
+  , detail: ProductDetail
+  , quantity: Int
   }
 
 type alias Model =
-  { product: State Product
+  { product: State ProductLarge
   , products: State (List ProductItem)
   , key: Nav.Key
   , url: Url.Url 

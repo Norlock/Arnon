@@ -32,7 +32,7 @@ main =
 init : () -> Url.Url -> Nav.Key -> (Model, Cmd Msg)
 init _ url key = 
   ((initModel url key)
-  , Api.fetchProducts
+  , Api.fetchProductList
   ) 
 
 initModel : Url.Url -> Nav.Key -> Model
@@ -48,17 +48,17 @@ update msg model =
     ForProductList subMsg ->
       (updateProductList model subMsg, Cmd.none)
     ChangedUrl url ->
-      ({ model | url = url }
-        |> initProduct, Cmd.none)
+      { model | url = url }
+        |> pageAction
     ClickedLink urlRequest ->
       case urlRequest of
         Browser.Internal url ->
           ( model, Nav.pushUrl model.key (Url.toString url) )
         Browser.External href ->
           ( model, Nav.load href )
-    ReceivedProducts (Ok result) ->
-      (Product.setProductList model result 
-        |> initProduct, Cmd.none)
+    ReceivedProducts (Ok products) ->
+      { model | products = Success products }
+        |> pageAction
     ReceivedProducts (Err _) ->
       ({ model | products = Failed}, Cmd.none)
 
@@ -77,6 +77,17 @@ updateProductList model msg =
     Filter _ -> 
       model
 
+pageAction : Model -> (Model, Cmd Msg)
+pageAction model  = 
+  case model.products of
+    Success products -> 
+      case (Route.parseUrl model.url) of
+        Route.Product id -> 
+          (Product.setProduct model products id, Api.fetchProduct id)
+        _ ->
+          (model, Cmd.none)
+    _ -> 
+      (model, Cmd.none)
 
 initProduct : Model -> Model
 initProduct model =

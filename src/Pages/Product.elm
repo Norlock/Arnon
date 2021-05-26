@@ -1,8 +1,7 @@
-module Pages.Product exposing (document, init, update, setProduct, setProductList)
+module Pages.Product exposing (document, init, update, setProduct)
 
 import Components.Header as Header
 import Components.Footer as Footer
-import Types
 import Browser
 import Html exposing (..)
 import Html.Attributes exposing (..)
@@ -10,25 +9,31 @@ import Html.Events exposing (onInput)
 import Maybe exposing (Maybe(..))
 import Types exposing (..)
 
-init : Maybe Types.Product
+init : Maybe ProductLarge
 init = 
   Nothing
 
-update : ProductMsg -> Product -> Product
-update msg product =
+update : ProductMsg -> ProductLarge -> ProductLarge
+update msg productLarge =
+  let basic = productLarge.basic
+  in
   case msg of
     Quantity value ->
-      { product | quantity = String.toInt value |> Maybe.withDefault 1 } 
+      { productLarge | quantity = String.toInt value |> Maybe.withDefault 1 } 
     Purchase ->
-      { product | stock = product.stock - 1 } 
+      { productLarge | basic = setStock basic (basic.stock - 1) } 
 
-document : Types.State Product -> Browser.Document Msg
+setStock : ProductItem -> Int -> ProductItem
+setStock product stock =
+  { product | stock = stock } 
+
+document : Types.State ProductLarge -> Browser.Document Msg
 document state =
   { title = "Arnon shop framework"
   , body = [ view state ]
   }
 
-view : Types.State Product -> Html Msg
+view : Types.State ProductLarge -> Html Msg
 view state =
   case state of 
     Types.Success product ->
@@ -46,22 +51,24 @@ view state =
         , Footer.footer
         ]
 
-productView : Product -> Html Msg
-productView model = 
+productView : ProductLarge -> Html Msg
+productView productLarge = 
+  let basic = productLarge.basic 
+  in
   div [ class "product" ]
     [ div [ class "left" ]
-      [ span [] [text model.title]
-      , span [] [text model.description]
+      [ span [] [text basic.title]
+      , span [] [text basic.description]
       , img 
         [ src "http://images6.fanpop.com/image/photos/41000000/38976356-cool-hd-wallpapers-bambidkar-41031277-2880-1800.jpg" 
         , width 300
         , height 300] []
       ]
     , div [ class "right" ]
-      [ span [] [ text ("Price: " ++ String.fromFloat (calculatePrice model)) ] 
+      [ span [] [ text ("Price: " ++ String.fromFloat (calculatePrice productLarge)) ] 
       , label [] [ text "Quantity" ]
       , input [ type_ "number"
-              , value (String.fromInt model.quantity)
+              , value (String.fromInt productLarge.quantity)
               , onInput (ForProduct << Quantity)
               , Html.Attributes.min "1"] [ ]
       , button [] [ text "Purchase" ]
@@ -76,9 +83,10 @@ breadcrumb =
       ]
     ]
     
-calculatePrice : Product -> Float
+calculatePrice : ProductLarge -> Float
 calculatePrice model =
-  toFloat model.quantity * model.price
+  toFloat model.quantity * model.basic.price
+    |> (\n -> n * (10 ^ 2)  / (10 ^ 2))
 
 getElementById : List ProductItem -> Int -> Maybe ProductItem 
 getElementById productList id =
@@ -91,10 +99,6 @@ getElementById productList id =
       [] ->
         Nothing
 
-setProductList : Model -> List ProductItem -> Model 
-setProductList model products =
-  { model | products = Success products }
-
 setProduct : Model -> List ProductItem -> Int -> Model 
 setProduct model products id =
   case (getElementById products id) of
@@ -103,14 +107,13 @@ setProduct model products id =
     Nothing ->
       model
 
-convertItemToProduct : ProductItem -> Product 
+convertItemToProduct : ProductItem -> ProductLarge 
 convertItemToProduct item =
-  { id = item.id
+  { basic = item
+  , detail = 
+    { brand = ""
+    , size = ""
+    , color = ""
+    }
   , quantity = 1
-  , title = item.title
-  , description = item.description
-  , brand = ""
-  , size = ""
-  , price = item.price
-  , stock = item.stock
   }
