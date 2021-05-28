@@ -15,7 +15,7 @@ fetchProductList =
         }
 
 
-fetchProduct : Int -> Cmd Msg
+fetchProduct : Id -> Cmd Msg
 fetchProduct id =
     Http.get
         { url = "http://localhost:8000/product/" ++ String.fromInt id

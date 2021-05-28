@@ -15,6 +15,30 @@
         flex-direction: column;
         padding: 20px;
     }
+
+    .color-container {
+        .color-label {
+            display: block;
+            margin-top: 1em;
+
+        }
+        .product-color-bar {
+            display: flex;
+            margin-left: 5px;
+        }
+
+        .product-color {
+            width: 25px;
+            height: 25px;
+            margin-right: 10px;
+            margin-top: 10px;
+            margin-bottom: 10px;
+            border-radius: 50%;
+            border: 1px solid black;
+            cursor: pointer;
+        }
+
+    }
 }
 
 .breadcrumb {

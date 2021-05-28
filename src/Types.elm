@@ -2,6 +2,7 @@ module Types exposing (..)
 
 import Browser
 import Browser.Navigation as Nav
+import Html exposing (Html)
 import Http
 import Url
 
@@ -34,7 +35,28 @@ type alias Model =
     , products : State (List ProductItem)
     , key : Nav.Key
     , url : Url.Url
+    , dialog : DialogId
     }
+
+
+type alias DialogData =
+    { dialog : DialogId
+    , title : String
+    , body : Html Msg
+    }
+
+
+type alias Title =
+    String
+
+
+type DialogId
+    = ShoppingCard
+    | None
+
+
+type alias Id =
+    Int
 
 
 type State a
@@ -50,6 +72,7 @@ type Msg
     | ClickedLink Browser.UrlRequest
     | ReceivedProductList (Result Http.Error (List ProductItem))
     | ReceivedProduct (Result Http.Error ProductLarge)
+    | ToggleDialog DialogId
 
 
 type ProductListMsg

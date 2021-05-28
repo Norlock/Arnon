@@ -44,6 +44,7 @@ initModel url key =
     , products = Loading
     , url = url
     , key = key
+    , dialog = None
     }
 
 
@@ -80,6 +81,9 @@ update msg model =
 
         ReceivedProduct (Err _) ->
             ( { model | product = Failed }, Cmd.none )
+
+        ToggleDialog dialogId ->
+            ( { model | dialog = dialogId }, Cmd.none )
 
 
 updateProduct : Model -> ProductMsg -> Model
@@ -149,7 +153,7 @@ view model =
             Home.document model
 
         Route.Product _ ->
-            Product.document model.product
+            Product.document model
 
         Route.NotFound ->
             NotFound.document

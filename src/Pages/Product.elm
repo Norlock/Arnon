@@ -1,11 +1,12 @@
 module Pages.Product exposing (document, init, setProduct, update)
 
 import Browser
+import Components.Dialog as Dialog
 import Components.Footer as Footer
 import Components.Header as Header
 import Html exposing (..)
 import Html.Attributes exposing (..)
-import Html.Events exposing (onInput)
+import Html.Events exposing (onClick, onInput)
 import Maybe exposing (Maybe(..))
 import Types exposing (..)
 
@@ -16,17 +17,17 @@ init =
 
 
 update : ProductMsg -> ProductLarge -> ProductLarge
-update msg productLarge =
+update msg product =
     let
         basic =
-            productLarge.basic
+            product.basic
     in
     case msg of
         Quantity value ->
-            { productLarge | quantity = String.toInt value |> Maybe.withDefault 1 }
+            { product | quantity = String.toInt value |> Maybe.withDefault 1 }
 
         Purchase ->
-            { productLarge | basic = setStock basic (basic.stock - 1) }
+            { product | basic = setStock basic (basic.stock - 1) }
 
 
 setStock : ProductItem -> Int -> ProductItem
@@ -34,21 +35,21 @@ setStock product stock =
     { product | stock = stock }
 
 
-document : Types.State ProductLarge -> Browser.Document Msg
+document : Model -> Browser.Document Msg
 document state =
     { title = "Arnon shop framework"
     , body = [ view state ]
     }
 
 
-view : Types.State ProductLarge -> Html Msg
-view state =
-    case state of
-        Types.Success product ->
+view : Model -> Html Msg
+view model =
+    case model.product of
+        Success product ->
             div [ class "page-container" ]
                 [ Header.header
                 , breadcrumb
-                , productView product
+                , productView product model.dialog
                 , Footer.footer
                 ]
 
@@ -61,8 +62,8 @@ view state =
                 ]
 
 
-productView : ProductLarge -> Html Msg
-productView productLarge =
+productView : ProductLarge -> DialogId -> Html Msg
+productView productLarge dialogId =
     let
         basic =
             productLarge.basic
@@ -80,7 +81,10 @@ productView productLarge =
                 , height 300
                 ]
                 []
-            , showColors detail.colors
+            , div [ class "color-container" ]
+                [ span [ class "color-label" ] [ text "Color" ]
+                , showColors detail.colors
+                ]
             ]
         , div [ class "right" ]
             [ span [] [ text ("Price: €" ++ String.fromFloat (calculatePrice productLarge)) ]
@@ -92,9 +96,27 @@ productView productLarge =
                 , Html.Attributes.min "1"
                 ]
                 []
-            , button [] [ text "Purchase" ]
+            , button [ onClick (ToggleDialog ShoppingCard) ] [ text "Purchase" ]
             ]
+        , dialog dialogId
         ]
+
+
+dialog : DialogId -> Html Msg
+dialog dialogId =
+    let
+        body =
+            div []
+                [ text "Order now for free delivery"
+                ]
+
+        data =
+            { title = "Product is added to your shopping card"
+            , body = body
+            , dialog = ShoppingCard
+            }
+    in
+    Dialog.dialog dialogId data
 
 
 showColors : List String -> Html Msg
@@ -102,7 +124,7 @@ showColors colors =
     colors
         |> List.map
             (\color ->
-                div [ class "product-color" ] [ text color ]
+                div [ class "product-color", style "background-color" color ] []
             )
         |> div [ class "product-color-bar" ]
 
