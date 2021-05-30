@@ -7,6 +7,15 @@ import Http
 import Url
 
 
+type alias ShoppingCardItem =
+    { id : Int
+    , title : String
+    , description : String
+    , price : Float
+    , quantity : Int
+    }
+
+
 type alias ProductItem =
     { id : Int
     , title : String
@@ -14,6 +23,10 @@ type alias ProductItem =
     , price : Float
     , stock : Int
     }
+
+
+
+-- TODO impl variants
 
 
 type alias ProductDetail =
@@ -36,6 +49,7 @@ type alias Model =
     , key : Nav.Key
     , url : Url.Url
     , dialog : DialogId
+    , shoppingCard : List ProductItem
     }
 
 

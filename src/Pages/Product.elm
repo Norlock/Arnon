@@ -1,4 +1,4 @@
-module Pages.Product exposing (document, init, setProduct, update)
+module Pages.Product exposing (document, setProduct, update)
 
 import Browser
 import Components.Dialog as Dialog
@@ -9,11 +9,6 @@ import Html.Attributes exposing (..)
 import Html.Events exposing (onClick, onInput)
 import Maybe exposing (Maybe(..))
 import Types exposing (..)
-
-
-init : Maybe ProductLarge
-init =
-    Nothing
 
 
 update : ProductMsg -> ProductLarge -> ProductLarge
@@ -65,11 +60,8 @@ view model =
 productView : ProductLarge -> DialogId -> Html Msg
 productView productLarge dialogId =
     let
-        basic =
-            productLarge.basic
-
-        detail =
-            productLarge.detail
+        { basic, detail } =
+            productLarge
     in
     div [ class "product" ]
         [ div [ class "left" ]

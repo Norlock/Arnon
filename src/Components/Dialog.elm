@@ -2,30 +2,35 @@ module Components.Dialog exposing (dialog)
 
 import Html exposing (..)
 import Html.Attributes exposing (..)
+import Html.Events exposing (onClick)
 import Types exposing (..)
 
 
 dialog : DialogId -> DialogData -> Html Msg
 dialog dialogId data =
-    showDialog (dialogId == data.dialog) data
-
-
-showDialog : Bool -> DialogData -> Html Msg
-showDialog show data =
+    let
+        show =
+            data.dialog == dialogId
+    in
     div [ class "dialog" ]
         [ div [ class "dialog-header" ]
             [ span [] [ text data.title ]
-            , img [] []
+            , div [ class "fas fa-window-close" ] []
             ]
         , div [ class "dialog-body" ] [ data.body ]
         ]
-        |> (\container -> overlay container show)
+        |> (\content -> div [ class (containerClassList show) ] [ overlay, content ])
 
 
-overlay : Html Msg -> Bool -> Html Msg
-overlay content show =
+containerClassList : Bool -> String
+containerClassList show =
     if show then
-        div [ class "overlay show" ] [ content ]
+        "dialog-container show"
 
     else
-        div [ class "overlay" ] [ content ]
+        "dialog-container"
+
+
+overlay : Html Msg
+overlay =
+    div [ class "overlay", onClick (ToggleDialog None) ] []

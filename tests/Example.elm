@@ -1,21 +1,21 @@
 module Example exposing (..)
 
-import Expect 
+import Expect
 import Fuzz exposing (string)
-import Test exposing (..)
-import Url exposing (fromString)
 import Maybe exposing (Maybe(..))
 import Route
+import Test exposing (..)
+import Url exposing (fromString)
+
 
 matchesProductRoute : Url.Url -> Expect.Expectation
 matchesProductRoute url =
-  case (Route.parseUrl url) of 
-    Route.Product _ ->
-      Expect.pass
-    Route.Home ->
-      Expect.fail "wrong route"
-    Route.NotFound ->
-      Expect.fail "wrong route"
+    case Route.parseUrl url of
+        Route.Product _ ->
+            Expect.pass
+
+        _ ->
+            Expect.fail "wrong route"
 
 
 suite : Test
@@ -23,13 +23,16 @@ suite =
     describe "The Route module "
         [ test "It parses the url" <|
             \_ ->
-                let url = fromString "http://localhost.com/product/1"
+                let
+                    url =
+                        fromString "http://localhost.com/product/1"
                 in
-                  case url of 
+                case url of
                     Just route ->
-                      matchesProductRoute route
+                        matchesProductRoute route
+
                     Nothing ->
-                      Expect.fail "Incorrect test route"
+                        Expect.fail "Incorrect test route"
 
         -- Expect.equal is designed to be used in pipeline style, like this.
         , test "reverses a known string" <|

@@ -45,6 +45,7 @@ initModel url key =
     , url = url
     , key = key
     , dialog = None
+    , shoppingCard = []
     }
 
 

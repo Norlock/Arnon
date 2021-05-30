@@ -14,6 +14,8 @@ npm start
 - [x] Setup routing
 - [x] Move all styles to scss
 - [ ] Setup breadcrumbs
+- [ ] Fill shopping card
+- [ ] Add icons
 - [ ] Write tests
 
 ### Backend
