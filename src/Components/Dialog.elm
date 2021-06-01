@@ -15,7 +15,7 @@ dialog dialogId data =
     div [ class "dialog" ]
         [ div [ class "dialog-header" ]
             [ span [] [ text data.title ]
-            , div [ class "fas fa-window-close" ] []
+            , div [ class "close fas fa-times", onClick (ToggleDialog None) ] []
             ]
         , div [ class "dialog-body" ] [ data.body ]
         ]

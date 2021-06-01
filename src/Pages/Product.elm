@@ -13,21 +13,9 @@ import Types exposing (..)
 
 update : ProductMsg -> ProductLarge -> ProductLarge
 update msg product =
-    let
-        basic =
-            product.basic
-    in
     case msg of
         Quantity value ->
             { product | quantity = String.toInt value |> Maybe.withDefault 1 }
-
-        Purchase ->
-            { product | basic = setStock basic (basic.stock - 1) }
-
-
-setStock : ProductItem -> Int -> ProductItem
-setStock product stock =
-    { product | stock = stock }
 
 
 document : Model -> Browser.Document Msg
@@ -90,16 +78,17 @@ productView productLarge dialogId =
                 []
             , button [ onClick (ToggleDialog ShoppingCard) ] [ text "Purchase" ]
             ]
-        , dialog dialogId
+        , dialog productLarge dialogId
         ]
 
 
-dialog : DialogId -> Html Msg
-dialog dialogId =
+dialog : ProductLarge -> DialogId -> Html Msg
+dialog large dialogId =
     let
         body =
             div []
                 [ text "Order now for free delivery"
+                , button [ class "purchase", onClick (shoppingCardMsg large) ] []
                 ]
 
         data =
@@ -111,12 +100,27 @@ dialog dialogId =
     Dialog.dialog dialogId data
 
 
-showColors : List String -> Html Msg
-showColors colors =
-    colors
+shoppingCardMsg : ProductLarge -> Msg
+shoppingCardMsg large =
+    let
+        { basic, quantity } =
+            large
+    in
+    { id = basic.id
+    , title = basic.title
+    , description = basic.description
+    , price = basic.price
+    , quantity = quantity
+    }
+        |> (\item -> Purchase item)
+
+
+showColors : List ColorVariant -> Html Msg
+showColors variants =
+    variants
         |> List.map
-            (\color ->
-                div [ class "product-color", style "background-color" color ] []
+            (\variant ->
+                div [ class "product-color", style "background-color" variant.color ] []
             )
         |> div [ class "product-color-bar" ]
 
@@ -167,6 +171,8 @@ convertItemToProduct item =
     , detail =
         { brand = ""
         , size = ""
+        , sizes = []
+        , color = "#00FF00"
         , colors = []
         }
     , quantity = 1

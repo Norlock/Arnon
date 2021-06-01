@@ -3,6 +3,7 @@ module Main exposing (..)
 import Api
 import Browser
 import Browser.Navigation as Nav
+import Dict
 import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (..)
@@ -10,6 +11,7 @@ import Json.Decode exposing (Error(..))
 import Pages.Home as Home
 import Pages.NotFound as NotFound
 import Pages.Product as Product
+import Pages.ShoppingCard
 import Result exposing (Result(..))
 import Route
 import Types exposing (..)
@@ -45,7 +47,7 @@ initModel url key =
     , url = url
     , key = key
     , dialog = None
-    , shoppingCard = []
+    , shoppingCard = Dict.empty
     }
 
 
@@ -86,6 +88,11 @@ update msg model =
         ToggleDialog dialogId ->
             ( { model | dialog = dialogId }, Cmd.none )
 
+        Purchase item ->
+            ( { model | shoppingCard = Pages.ShoppingCard.update model.shoppingCard item }
+            , Cmd.none
+            )
+
 
 updateProduct : Model -> ProductMsg -> Model
 updateProduct model msg =
@@ -121,21 +128,6 @@ pageAction model =
 
         _ ->
             ( model, Cmd.none )
-
-
-initProduct : Model -> Model
-initProduct model =
-    case model.products of
-        Success products ->
-            case Route.parseUrl model.url of
-                Route.Product id ->
-                    Product.setProduct model products id
-
-                _ ->
-                    model
-
-        _ ->
-            model
 
 
 subscriptions : Model -> Sub Msg

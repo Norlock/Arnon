@@ -2,13 +2,14 @@ module Types exposing (..)
 
 import Browser
 import Browser.Navigation as Nav
+import Dict exposing (Dict)
 import Html exposing (Html)
 import Http
 import Url
 
 
 type alias ShoppingCardItem =
-    { id : Int
+    { id : Id
     , title : String
     , description : String
     , price : Float
@@ -25,14 +26,30 @@ type alias ProductItem =
     }
 
 
+type alias ColorVariant =
+    { id : Id
+    , color : String
+    , stock : Int
+    , productId : Int
+    , price : Float
+    }
 
--- TODO impl variants
+
+type alias SizeVariant =
+    { id : Id
+    , size : String
+    , stock : Int
+    , productId : Int
+    , price : Float
+    }
 
 
 type alias ProductDetail =
     { brand : String
     , size : String
-    , colors : List String
+    , sizes : List SizeVariant
+    , color : String
+    , colors : List ColorVariant
     }
 
 
@@ -49,7 +66,7 @@ type alias Model =
     , key : Nav.Key
     , url : Url.Url
     , dialog : DialogId
-    , shoppingCard : List ProductItem
+    , shoppingCard : Dict Id ShoppingCardItem
     }
 
 
@@ -87,6 +104,7 @@ type Msg
     | ReceivedProductList (Result Http.Error (List ProductItem))
     | ReceivedProduct (Result Http.Error ProductLarge)
     | ToggleDialog DialogId
+    | Purchase ShoppingCardItem
 
 
 type ProductListMsg
@@ -95,4 +113,3 @@ type ProductListMsg
 
 type ProductMsg
     = Quantity String
-    | Purchase

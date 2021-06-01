@@ -17,6 +17,8 @@ npm start
 - [ ] Fill shopping card
 - [ ] Add icons
 - [ ] Write tests
+- [ ] Cookies (shopping card)
+- [ ] Autocomplete
 
 ### Backend
 - [ ] Get products
