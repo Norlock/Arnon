@@ -33,6 +33,31 @@ $background-navbar: #a2c2f2;
         }
     }
 
+    .header-right {
+        display: flex;
+        align-items: center;
+
+        .card-container {
+            margin-right: 1em;
+            cursor: pointer;
+            display: flex;
+
+            .icon {
+                font-size: 22px;
+                display: block;
+            }
+
+            .count {
+                background-color: green;
+                padding: 5px;
+                border-radius: 50%;
+                font-size: 11;
+                display: block;
+                transform: translate(-3px, -10px);
+            }
+        }
+    }
+
     .login-container {
         background-color: #22a2a2;
         padding: 20px;

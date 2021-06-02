@@ -30,7 +30,7 @@ view model =
     case model.product of
         Success product ->
             div [ class "page-container" ]
-                [ Header.header
+                [ Header.header model
                 , breadcrumb
                 , productView product model.dialog
                 , Footer.footer
@@ -38,7 +38,7 @@ view model =
 
         _ ->
             div [ class "page-container" ]
-                [ Header.header
+                [ Header.header model
                 , breadcrumb
                 , text "No product"
                 , Footer.footer
@@ -83,12 +83,12 @@ productView productLarge dialogId =
 
 
 dialog : ProductLarge -> DialogId -> Html Msg
-dialog large dialogId =
+dialog product dialogId =
     let
         body =
             div []
                 [ text "Order now for free delivery"
-                , button [ class "purchase", onClick (shoppingCardMsg large) ] []
+                , button [ class "purchase", onClick (shoppingCardMsg product) ] [ text "Purchase" ]
                 ]
 
         data =

@@ -8,19 +8,19 @@ import Types exposing (..)
 
 update : Dict Id ShoppingCardItem -> ShoppingCardItem -> Dict Id ShoppingCardItem
 update dict new =
-    --Dict.update new.id
-    --(Maybe.map (\item -> updateItem item))
-    dict
+    Dict.get new.id dict
+        |> updateItem new
+        |> (\item -> Dict.insert new.id item dict)
 
 
+updateItem : ShoppingCardItem -> Maybe ShoppingCardItem -> ShoppingCardItem
+updateItem new maybe =
+    case maybe of
+        Just item ->
+            { item | quantity = item.quantity + new.quantity }
 
---updateItem : Maybe ShoppingCardItem -> ShoppingCardItem -> ShoppingCardItem
---updateItem maybe new =
---case maybe of
---Just item ->
---{ item | quantity = item.quantity + new.quantity }
---Nothing ->
---new
+        Nothing ->
+            new
 
 
 document : Model -> Browser.Document Msg

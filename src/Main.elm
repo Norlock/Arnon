@@ -89,7 +89,10 @@ update msg model =
             ( { model | dialog = dialogId }, Cmd.none )
 
         Purchase item ->
-            ( { model | shoppingCard = Pages.ShoppingCard.update model.shoppingCard item }
+            ( { model
+                | shoppingCard = Pages.ShoppingCard.update model.shoppingCard item
+                , dialog = None
+              }
             , Cmd.none
             )
 

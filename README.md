@@ -14,11 +14,16 @@ npm start
 - [x] Setup routing
 - [x] Move all styles to scss
 - [ ] Setup breadcrumbs
-- [ ] Fill shopping card
 - [ ] Add icons
 - [ ] Write tests
-- [ ] Cookies (shopping card)
 - [ ] Autocomplete
+- [ ] JS port for console log
+
+
+## Shopping card
+- [ ] Show shopping card dialog on header 
+- [ ] Fill shopping card
+- [ ] Cookies (shopping card)
 
 ### Backend
 - [ ] Get products

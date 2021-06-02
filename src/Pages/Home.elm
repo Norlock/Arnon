@@ -11,7 +11,7 @@ import Types exposing (..)
 view : Types.Model -> Html Types.Msg
 view model =
     div [ class "page-container" ]
-        [ Header.header
+        [ Header.header model
         , productsView model
         , Footer.footer
         ]
