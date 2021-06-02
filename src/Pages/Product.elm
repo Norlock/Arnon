@@ -76,7 +76,7 @@ productView productLarge dialogId =
                 , Html.Attributes.min "1"
                 ]
                 []
-            , button [ onClick (ToggleDialog ShoppingCard) ] [ text "Purchase" ]
+            , button [ onClick (ToggleDialog AddToShoppingCard) ] [ text "Purchase" ]
             ]
         , dialog productLarge dialogId
         ]
@@ -94,7 +94,7 @@ dialog product dialogId =
         data =
             { title = "Product is added to your shopping card"
             , body = body
-            , dialog = ShoppingCard
+            , dialog = AddToShoppingCard
             }
     in
     Dialog.dialog dialogId data

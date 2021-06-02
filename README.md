@@ -14,7 +14,7 @@ npm start
 - [x] Setup routing
 - [x] Move all styles to scss
 - [ ] Setup breadcrumbs
-- [ ] Add icons
+- [x] Add icons
 - [ ] Write tests
 - [ ] Autocomplete
 - [ ] JS port for console log

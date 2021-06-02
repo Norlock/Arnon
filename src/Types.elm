@@ -82,7 +82,8 @@ type alias Title =
 
 
 type DialogId
-    = ShoppingCard
+    = AddToShoppingCard
+    | ShowShoppingCard
     | None
 
 

@@ -1,9 +1,10 @@
 module Components.Header exposing (header)
 
+import Components.Dialog as Dialog
 import Dict
 import Html exposing (..)
 import Html.Attributes exposing (..)
-import Html.Events exposing (onInput)
+import Html.Events exposing (onClick, onInput)
 import Tuple exposing (first, second)
 import Types exposing (..)
 
@@ -45,11 +46,12 @@ header model =
 rightHeader : Model -> Html Msg
 rightHeader model =
     div [ class "header-right" ]
-        [ div [ class "card-container" ]
+        [ div [ class "card-container", onClick (ToggleDialog ShowShoppingCard) ]
             [ span [ class "icon fas fa-shopping-cart" ] []
             , span [ class "count" ] [ text (String.fromInt (quantityTotal model)) ]
             ]
         , span [ class "login-container" ] [ text "login" ]
+        , showShoppingCard model
         ]
 
 
@@ -68,3 +70,35 @@ calculateSum sum list =
 
         element :: tail ->
             calculateSum (sum + element.quantity) tail
+
+
+showShoppingCard : Model -> Html Msg
+showShoppingCard model =
+    let
+        body =
+            div []
+                [ shoppingCardItems (Dict.values model.shoppingCard)
+                ]
+
+        data =
+            { title = "Shopping card"
+            , body = body
+            , dialog = ShowShoppingCard
+            }
+    in
+    Dialog.dialog model.dialog data
+
+
+shoppingCardItems : List ShoppingCardItem -> Html Msg
+shoppingCardItems list =
+    list
+        |> List.map shoppingCardItem
+        |> div []
+
+
+shoppingCardItem : ShoppingCardItem -> Html Msg
+shoppingCardItem item =
+    div [ class "card-item" ]
+        [ div [] [ text "Product" ]
+        , div [] [ text "Quantity" ]
+        ]
