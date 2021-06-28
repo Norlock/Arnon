@@ -28,7 +28,7 @@ productDecoder =
     Decode.succeed ProductItem
         |> required "id" int
         |> required "title" string
-        |> required "description" string
+        |> required "description_short" string
         |> required "price" float
         |> required "stock" int
 
